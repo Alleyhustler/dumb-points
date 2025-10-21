@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dumb Points - Collect Your Shame</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@300;400;500&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --charcoal: #1a1a1a;
+            --dark-gray: #2a2a2a;
+            --medium-gray: #3a3a3a;
+            --light-gray: #e0e0e0;
+            --cyan: #00a8cc;
+            --cyan-glow: rgba(0, 168, 204, 0.3);
+            --text-primary: #f0f0f0;
+            --text-secondary: #b0b0b0;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: url('a.png') no-repeat center center fixed;
+            background-size: cover;
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('a.png');
+            opacity: 0.3;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            padding: 30px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: center;
+        }
+
+        /* Left Panel - Brand & Info */
+        .left-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+
+        .logo-container {
+            position: relative;
+            margin-bottom: 20px;
+        }
+
+.logo {
+    width: 300px;
+    height: 300px;
+    filter: drop-shadow(0 0 10px var(--cyan-glow));
+    transition: filter 0.5s ease;
+    /* Remove the brain emoji and use PNG instead */
+    background: url('b.png') no-repeat center center;
+    background-size: contain;
+}
+
+        .logo-container:hover .logo {
+            filter: drop-shadow(0 0 15px var(--cyan));
+        }
+
+        .logo-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--cyan-glow) 0%, transparent 70%);
+            opacity: 0.5;
+            z-index: -1;
+        }
+
+        h1 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 500;
+            font-size: 2.8rem;
+            letter-spacing: 2px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            line-height: 1;
+        }
+
+        .subtitle {
+            font-family: 'Inter', sans-serif;
+            font-weight: 300;
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 25px;
+            font-style: italic;
+            max-width: 300px;
+        }
+
+        .twitter-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: var(--dark-gray);
+            color: var(--text-primary);
+            text-decoration: none;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--medium-gray);
+            margin-bottom: 30px;
+        }
+
+        .twitter-button:hover {
+            background: var(--medium-gray);
+            transform: translateY(-2px);
+        }
+
+        .info-section {
+            background: rgba(42, 42, 42, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 20px;
+            width: 100%;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .info-text {
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+            margin-bottom: 15px;
+        }
+
+        .lore-text {
+            font-style: italic;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            color: var(--text-secondary);
+        }
+
+        /* Right Panel - Interaction */
+        .right-panel {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .wallet-section, .claim-section {
+            background: rgb(8 8 8 / 70%);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 25px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .wallet-status {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .wallet-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: var(--medium-gray);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+        }
+
+        .wallet-address {
+            font-family: monospace;
+            font-size: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 8px 16px;
+            border-radius: 8px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .wallet-microcopy {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+            text-align: center;
+            line-height: 1.4;
+        }
+
+        .button {
+            background: var(--cyan);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .button:hover:not(:disabled) {
+            background: #0088aa;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 168, 204, 0.3);
+        }
+
+        .button:disabled {
+            background: var(--medium-gray);
+            color: var(--text-secondary);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .button.secondary {
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+        }
+
+        .button.secondary:hover:not(:disabled) {
+            background: rgba(0, 168, 204, 0.1);
+        }
+
+        .claim-section {
+            opacity: 0.5;
+            transition: opacity 0.5s ease;
+        }
+
+        .claim-section.active {
+            opacity: 1;
+        }
+
+        .claim-intro {
+            font-size: 1rem;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+
+        .tweet-instructions {
+            background: rgba(0, 0, 0, 0.3);
+            padding: 12px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            font-size: 0.8rem;
+            line-height: 1.4;
+        }
+
+        .tweet-instructions ol {
+            margin-left: 18px;
+            margin-top: 8px;
+        }
+
+        .tweet-instructions li {
+            margin-bottom: 6px;
+        }
+
+        .input-group {
+            margin-bottom: 15px;
+        }
+
+        .input-label {
+            display: block;
+            margin-bottom: 6px;
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 10px 14px;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--text-primary);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            transition: border-color 0.3s ease;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: var(--cyan);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox {
+            margin-top: 2px;
+        }
+
+        .checkbox-label {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            line-height: 1.3;
+        }
+
+        .success-message {
+            background: rgba(0, 168, 204, 0.1);
+            border: 1px solid var(--cyan);
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .success-message.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .points-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--cyan);
+            border-radius: 20px;
+            padding: 6px 12px;
+            margin-top: 10px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            color: var(--cyan);
+        }
+
+        .error-message {
+            background: rgba(204, 0, 0, 0.1);
+            border: 1px solid #cc0000;
+            border-radius: 8px;
+            padding: 12px;
+            text-align: center;
+            margin-top: 15px;
+            display: none;
+            font-size: 0.8rem;
+        }
+
+        .error-message.active {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            background: rgba(26, 26, 26, 0.8);
+            backdrop-filter: blur(5px);
+        }
+
+        .copyright {
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            margin-bottom: 5px;
+        }
+
+        .legal {
+            font-size: 0.7rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.3;
+        }
+
+        /* Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .left-panel, .right-panel {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Left Panel - Brand & Information -->
+        <div class="left-panel">
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <div class="logo"></div>
+            </div>
+            <h1>Dumb Points</h1>
+            <p class="subtitle">Collect your shame. Wear it like a badge.</p>
+            <a href="https://x.com/DumbPointsSol" class="twitter-button" target="_blank">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                </svg>
+                Follow @DumbPointsSol
+            </a>
+            
+            <div class="info-section">
+                <p class="info-text">Dumb Points are satirical rewards for acknowledging questionable crypto decisions. A collectible badge for those brave enough to admit degenerate behavior.</p>
+                <p class="lore-text">In the cemetery of trades, we collect these moments as tokens of our shared humanity. Wear your shame not as a burden, but as a badge of honor.</p>
+            </div>
+        </div>
+
+        <!-- Right Panel - Interaction -->
+        <div class="right-panel">
+            <section class="wallet-section">
+                <div class="wallet-status">
+                    <div class="wallet-avatar">?</div>
+                    <div class="wallet-address">Not Connected</div>
+                    <p class="wallet-microcopy">We only read your wallet to show identity no funds will be moved.</p>
+                </div>
+                <button id="connectButton" class="button">Connect Phantom</button>
+            </section>
+
+            <section id="claimSection" class="claim-section">
+                <p class="claim-intro">Claim your Dumb Points — follow us and tweet the truth.</p>
+                
+                <div class="tweet-instructions">
+                    <ol>
+                        <li>Follow @DumbPointsSol on X/Twitter</li>
+                        <li>Post: "I'm dumb and I claim my Dumb Points @DumbPointsSol"</li>
+                        <li>Paste your tweet URL below</li>
+                    </ol>
+                </div>
+
+                <div class="input-group">
+                    <label class="input-label" for="tweetUrl">Tweet URL</label>
+                    <input type="text" id="tweetUrl" class="input-field" placeholder="https://x.com/yourusername/status/1234567890">
+                </div>
+
+                <button id="verifyButton" class="button secondary" disabled>Verify Tweet</button>
+
+                <div class="checkbox-group">
+                    <input type="checkbox" id="publicClaim" class="checkbox">
+                    <label for="publicClaim" class="checkbox-label">Save my claim publicly on the wall (optional)</label>
+                </div>
+
+                <button id="claimButton" class="button" disabled>Claim Dumb Points</button>
+
+                <div id="successMessage" class="success-message">
+                    <p>Claimed! <span class="points-badge">+100 DUMB</span></p>
+                    <p>Saved locally.</p>
+                </div>
+
+                <div id="errorMessage" class="error-message">
+                    <p>Could not verify tweet. Paste the correct link or try server verification.</p>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // State management
+            const state = {
+                walletConnected: false,
+                walletAddress: null,
+                tweetVerified: false,
+                pointsClaimed: false,
+                demoMode: true // Set to false for production with actual Twitter API
+            };
+
+            // DOM elements
+            const connectButton = document.getElementById('connectButton');
+            const claimSection = document.getElementById('claimSection');
+            const verifyButton = document.getElementById('verifyButton');
+            const claimButton = document.getElementById('claimButton');
+            const successMessage = document.getElementById('successMessage');
+            const errorMessage = document.getElementById('errorMessage');
+            const tweetUrlInput = document.getElementById('tweetUrl');
+            const walletAddressElement = document.querySelector('.wallet-address');
+            const walletAvatarElement = document.querySelector('.wallet-avatar');
+
+            // Check if user has already claimed points
+            checkExistingClaim();
+
+            // Phantom wallet connection
+            connectButton.addEventListener('click', connectWallet);
+
+            // Tweet verification
+            verifyButton.addEventListener('click', verifyTweet);
+
+            // Claim points
+            claimButton.addEventListener('click', claimPoints);
+
+            // Enable verify button when URL is entered
+            tweetUrlInput.addEventListener('input', function() {
+                verifyButton.disabled = !this.value.trim();
+            });
+
+            // Connect to Phantom wallet
+            async function connectWallet() {
+                if (window.solana && window.solana.isPhantom) {
+                    try {
+                        const response = await window.solana.connect();
+                        const publicKey = response.publicKey.toString();
+                        
+                        // Update state
+                        state.walletConnected = true;
+                        state.walletAddress = publicKey;
+                        
+                        // Update UI
+                        connectButton.textContent = 'Connected';
+                        connectButton.disabled = true;
+                        
+                        // Format and display wallet address
+                        const maskedAddress = `${publicKey.substring(0, 4)}...${publicKey.substring(publicKey.length - 4)}`;
+                        walletAddressElement.textContent = maskedAddress;
+                        
+                        // Generate simple identicon (in a real app, use a proper library)
+                        walletAvatarElement.textContent = publicKey.substring(2, 3).toUpperCase();
+                        
+                        // Activate claim section
+                        claimSection.classList.add('active');
+                        
+                        // Check if this wallet has already claimed points
+                        checkExistingClaim();
+                        
+                    } catch (err) {
+                        console.error('Connection error:', err);
+                        alert('Failed to connect to Phantom wallet. Please try again.');
+                    }
+                } else {
+                    alert('Phantom wallet not found. Please install Phantom extension.');
+                }
+            }
+            function simulateVerification() {
+    return new Promise((resolve) => {
+        // Show verifying state
+        verifyButton.textContent = 'Verifying...';
+        verifyButton.disabled = true;
+        
+        // Create and show waiting message
+        const waitingMessage = document.createElement('div');
+        waitingMessage.className = 'verifying-message';
+        waitingMessage.innerHTML = `
+            <div style="text-align: center; margin-top: 15px;">
+                <div style="font-size: 0.9rem; color: var(--cyan); margin-bottom: 10px;">
+                    Verifying and waiting points...
+                </div>
+                <div style="width: 100%; height: 4px; background: var(--dark-gray); border-radius: 2px; overflow: hidden;">
+                    <div id="progressBar" style="width: 0%; height: 100%; background: var(--cyan); transition: width 120s linear;"></div>
+                </div>
+                <div style="font-size: 0.7rem; color: var(--text-secondary); margin-top: 8px;">
+                    This may take a few moments
+                </div>
+            </div>
+        `;
+        
+        // Insert after verify button
+        verifyButton.parentNode.insertBefore(waitingMessage, verifyButton.nextSibling);
+        
+        // Start progress bar
+        setTimeout(() => {
+            document.getElementById('progressBar').style.width = '100%';
+        }, 100);
+        
+        // Simulate 3 minute wait (180000ms) but for demo we'll use 5 seconds
+        const waitTime = 170000; // Change to 180000 for actual 3 minutes
+        
+        setTimeout(() => {
+            // Remove waiting message
+            waitingMessage.remove();
+            
+            // Complete verification
+            state.tweetVerified = true;
+            verifyButton.textContent = 'Verified ✓';
+            verifyButton.disabled = true;
+            tweetUrlInput.disabled = true;
+            claimButton.disabled = false;
+            hideError();
+            
+            resolve(true);
+        }, waitTime);
+    });
+}
+
+
+            // Verify tweet (mocked for demo)
+            async function verifyTweet() {
+                const tweetUrl = tweetUrlInput.value.trim();
+                
+                if (!tweetUrl) {
+                    showError('Please enter a tweet URL');
+                    return;
+                }
+
+                // Simple URL pattern check (for demo)
+                const twitterUrlPattern = /https?:\/\/(?:www\.)?(?:x\.com|twitter\.com)\/\w+\/status\/\d+/;
+                
+                if (state.demoMode) {
+                    // Demo mode - just check URL pattern
+                    if (twitterUrlPattern.test(tweetUrl)) {
+                        // Use the new verification delay function
+                        await simulateVerification();
+                    } else {
+                        showError('Please enter a valid Twitter/X URL');
+                    }
+                } else {
+                    // Production mode - would call server API
+                    fetch('/api/verifyTweet', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ tweetUrl: tweetUrl })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.verified) {
+                            state.tweetVerified = true;
+                            verifyButton.textContent = 'Verified ✓';
+                            verifyButton.disabled = true;
+                            tweetUrlInput.disabled = true;
+                            claimButton.disabled = false;
+                            hideError();
+                        } else {
+                            showError('Could not verify tweet. Please make sure you followed and tweeted correctly.');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Verification error:', error);
+                        showError('Verification service unavailable. Please try again later.');
+                    });
+                }
+            }
+
+            // Claim Dumb Points
+            function claimPoints() {
+                if (!state.walletConnected || !state.tweetVerified) {
+                    showError('Please connect wallet and verify tweet first');
+                    return;
+                }
+
+                // Save claim to localStorage
+                const claimData = {
+                    wallet: state.walletAddress,
+                    timestamp: new Date().toISOString(),
+                    points: 100,
+                    public: document.getElementById('publicClaim').checked
+                };
+                
+                localStorage.setItem(`${state.walletAddress}_dumbpoints`, JSON.stringify(claimData));
+                
+                // Update state
+                state.pointsClaimed = true;
+                
+                // Show success message
+                successMessage.classList.add('active');
+                claimButton.disabled = true;
+                claimButton.textContent = 'Claimed ✓';
+                
+                // In production, would also send to server if public claim is checked
+                if (claimData.public && !state.demoMode) {
+                    fetch('/api/wall', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify(claimData)
+                    })
+                    .catch(error => {
+                        console.error('Failed to save to public wall:', error);
+                    });
+                }
+            }
+
+            // Check if user has already claimed points for this wallet
+            function checkExistingClaim() {
+                if (state.walletAddress) {
+                    const existingClaim = localStorage.getItem(`${state.walletAddress}_dumbpoints`);
+                    if (existingClaim) {
+                        const claimData = JSON.parse(existingClaim);
+                        state.pointsClaimed = true;
+                        
+                        // Update UI to show already claimed
+                        claimSection.classList.add('active');
+                        successMessage.classList.add('active');
+                        claimButton.disabled = true;
+                        claimButton.textContent = 'Claimed ✓';
+                        verifyButton.disabled = true;
+                        verifyButton.textContent = 'Verified ✓';
+                        tweetUrlInput.disabled = true;
+                        
+                        // Show points badge
+                        document.querySelector('.points-badge').textContent = `+${claimData.points} DUMB`;
+                    }
+                }
+            }
+
+            // Helper functions
+            function showError(message) {
+                errorMessage.querySelector('p').textContent = message;
+                errorMessage.classList.add('active');
+                successMessage.classList.remove('active');
+            }
+
+            function hideError() {
+                errorMessage.classList.remove('active');
+            }
+        });
+    </script>
+</body>
+</html>
